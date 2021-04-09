@@ -1,6 +1,7 @@
 const Discord = require('discord.js');
 const config = require('./config.json');
 const fetch = require('node-fetch');
+const { type } = require('node:os');
 
 const client = new Discord.Client();
 
@@ -15,16 +16,18 @@ client.ws.on('INTERACTION_CREATE', async (interaction) => {
 		data: { type: 5 }
 	});
 
-	const type = ['safe', 'questionable', 'explicit'][interaction.data.options[0].value];
+	const type = interaction.data.options[0].value;
 
 	webhookClient = new Discord.WebhookClient(client.user.id, interaction.token);
 
-	if (!client.channels.cache.get(interaction.channel_id).nsfw) {
+	if (type != 0 && !client.channels.cache.get(interaction.channel_id).nsfw) {
 		webhookClient.send('discord would ban me lol | use on nsfw plz');
 		return;
 	}
 
-	const response = await fetch(`https://astolfo.rocks/api/v1/images/random/${type}`);
+	const response = await fetch(
+		`https://astolfo.rocks/api/v1/images/random/${['safe', 'questionable', 'explicit'][type]}`
+	);
 	const json = await response.json();
 
 	const embed = new Discord.MessageEmbed()
