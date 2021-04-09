@@ -19,17 +19,17 @@ quick and dirty™️ bot that gives you astolfo images by using astolfo.rocks
 			"required": true,
 			"choices": [
 				{
-					"type": 3,
+					"type": 4,
 					"name": "sfw",
 					"value": 0
 				},
 				{
-					"type": 3,
+					"type": 4,
 					"name": "questionable",
 					"value": 1
 				},
 				{
-					"type": 3,
+					"type": 4,
 					"name": "nsfw",
 					"value": 2
 				}
