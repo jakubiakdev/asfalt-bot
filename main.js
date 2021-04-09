@@ -1,59 +1,46 @@
 const Discord = require('discord.js');
-const client = new Discord.Client();
 const config = require('./config.json');
 const fetch = require('node-fetch');
 
+const client = new Discord.Client();
+
 client.on('ready', () => {
-    console.log('asfalto bot');
-    console.log(`Bot invite (used for checking nsfw): https://discord.com/oauth2/authorize?client_id=${client.user.id}&scope=bot&permissions=8`);
-    console.log(`Slashcommand invite (recommended): https://discord.com/oauth2/authorize?client_id=${client.user.id}&scope=applications.commands`)
-    client.user.setPresence({ activity: { type: `COMPETING`, name: `bed` }, status: `online` }); //status
+	console.log('asfalto bot');
+	client.user.setPresence({ activity: { type: `COMPETING`, name: `bed` }, status: `online` });
 });
 
-client.ws.on('INTERACTION_CREATE', async interaction => {
-    if(interaction.data.name !== "astolfo") return;   
-    client.api.interactions(interaction.id, interaction.token).callback.post({
-        data: {
-            type: 5,
-        }
-    });
-    switch (interaction.data.options[0].value){
-        case 'sfw': {
-            const response = await fetch('https://astolfo.rocks/api/v1/images/random/Safe');
-            const json = await response.json();
-            let embed = new Discord.MessageEmbed().setImage(json.url).setTitle(`Astolfo`).setFooter(`views: ${json.views} | rating: ${json.rating} | sauce: ${json.source || "Unknown"}`);
-            new Discord.WebhookClient(client.user.id, interaction.token).send({ embeds: [embed]});
-            break;
-        }
-        case 'questionable': {
-            if (client.channels.cache.get(interaction.channel_id).nsfw == true) {
-                const response = await fetch('https://astolfo.rocks/api/v1/images/random/Questionable');
-                const json = await response.json();
-                let embed = new Discord.MessageEmbed().setImage(json.url).setTitle(`Astolfo`).setFooter(`views: ${json.views} | rating: ${json.rating} | sauce: ${json.source || "Unknown"}`);
-                new Discord.WebhookClient(client.user.id, interaction.token).send({ embeds: [embed]});
-            } else{
-                new Discord.WebhookClient(client.user.id, interaction.token).send('discord would ban me lol | use on nsfw plz');
-            }
-            break;
-        }
-        case 'nsfw': {
-            if (client.channels.cache.get(interaction.channel_id).nsfw == true) {
-                const response = await fetch('https://astolfo.rocks/api/v1/images/random/Explicit');
-                const json = await response.json();
-                let embed = new Discord.MessageEmbed().setImage(json.url).setTitle(`Astolfo`).setFooter(`views: ${json.views} | rating: ${json.rating} | sauce: ${json.source || "Unknown"}`);
-                new Discord.WebhookClient(client.user.id, interaction.token).send({ embeds: [embed]});
-            } else{
-                new Discord.WebhookClient(client.user.id, interaction.token).send('discord would ban me lol | use on nsfw plz');
-            }
-            break;
-        }
-        default:
-            new Discord.WebhookClient(client.user.id, interaction.token).send('oops');
-    }
-});
-process.on('uncaughtException', uncaughtException => { 
-    console.error("Something has gone wrong! " + uncaughtException);
+client.ws.on('INTERACTION_CREATE', async (interaction) => {
+	if (interaction.data.name !== 'astolfo') return;
+	client.api.interactions(interaction.id, interaction.token).callback.post({
+		data: { type: 5 }
+	});
+
+	const type = interaction.data.options[0].value;
+
+	webhookClient = new Discord.WebhookClient(client.user.id, interaction.token);
+
+	if (type != 0 && !client.channels.cache.get(interaction.channel_id).nsfw) {
+		webhookClient.send('discord would ban me lol | use on nsfw plz');
+		return;
+	}
+
+	const response = await fetch(
+		`https://astolfo.rocks/api/v1/images/random/${['safe', 'questionable', 'explicit'][type]}`
+	);
+	const json = await response.json();
+
+	const embed = new Discord.MessageEmbed()
+		.setImage(json.url)
+		.setTitle(`Astolfo`)
+		.setFooter(
+			`views: ${json.views} | rating: ${json.rating} | sauce: ${json.source || 'Unknown'}`
+		);
+
+	webhookClient.send({ embeds: [embed] });
 });
 
+process.on('uncaughtException', (error) => {
+	console.error(error);
+});
 
-client.login(config.token);//logging in
+client.login(config.token);
