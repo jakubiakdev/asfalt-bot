@@ -17,10 +17,10 @@ client.ws.on('INTERACTION_CREATE', async (interaction) => {
 
 	const type = ['safe', 'questionable', 'explicit'][interaction.data.options[0].value];
 
+	webhookClient = Discord.WebhookClient(client.user.id, interaction.token);
+
 	if (!client.channels.cache.get(interaction.channel_id).nsfw) {
-		new Discord.WebhookClient(client.user.id, interaction.token).send(
-			'discord would ban me lol | use on nsfw plz'
-		);
+		webhookClient.send('discord would ban me lol | use on nsfw plz');
 		return;
 	}
 
@@ -34,7 +34,7 @@ client.ws.on('INTERACTION_CREATE', async (interaction) => {
 			`views: ${json.views} | rating: ${json.rating} | sauce: ${json.source || 'Unknown'}`
 		);
 
-	new Discord.WebhookClient(client.user.id, interaction.token).send({ embeds: [embed] });
+	webhookClient.send({ embeds: [embed] });
 });
 
 process.on('uncaughtException', (error) => {
