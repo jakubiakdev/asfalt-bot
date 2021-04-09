@@ -17,7 +17,7 @@ client.ws.on('INTERACTION_CREATE', async interaction => {
             type: 5,
         }
     });
-    switch (interaction.data.options[0].name){
+    switch (interaction.data.options[0].value){
         case 'sfw': {
             const response = await fetch('https://astolfo.rocks/api/v1/images/random/Safe');
             const json = await response.json();

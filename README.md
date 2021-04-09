@@ -7,25 +7,31 @@ quick and dirty™️ bot that gives you astolfo images by using astolfo.rocks
 ```
 {
   "name": "astolfo",
-  "description": "astolfo image",
+  "description": "gives you some good astolfo",
   "options": [
     {
-      "type": 1,
-      "name": "sfw",
-      "description": "sfw",
-      "options": []
+    "type": 3,
+    "name": "rating",
+    "description": "rating of your astolfo",
+    "default": false,
+    "required": true,
+    "choices": [
+    {
+        "type": 3,
+        "name": "sfw",
+        "value": "sfw"
     },
     {
-      "type": 1,
-      "name": "nsfw",
-      "description": "nsfw",
-      "options": []
+        "type": 3,
+        "name": "nsfw",
+        "value": "nsfw"
     },
     {
-      "type": 1,
-      "name": "questionable",
-      "description": "questionable",
-      "options": []
+        "type": 3,
+        "name": "questionable",
+        "value": "questionable"
+    }
+    ]
     }
   ]
 }
