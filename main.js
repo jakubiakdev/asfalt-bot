@@ -17,7 +17,7 @@ client.ws.on('INTERACTION_CREATE', async (interaction) => {
 
 	const type = ['safe', 'questionable', 'explicit'][interaction.data.options[0].value];
 
-	webhookClient = Discord.WebhookClient(client.user.id, interaction.token);
+	webhookClient = new Discord.WebhookClient(client.user.id, interaction.token);
 
 	if (!client.channels.cache.get(interaction.channel_id).nsfw) {
 		webhookClient.send('discord would ban me lol | use on nsfw plz');
