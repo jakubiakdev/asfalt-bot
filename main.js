@@ -5,7 +5,7 @@ const fetch = require('node-fetch');
 
 client.on('ready', () => {
     console.log('asfalto bot');
-    console.log(`Bot invite (used checking nsfw): https://discord.com/oauth2/authorize?client_id=${client.user.id}&scope=bot&permissions=8`);
+    console.log(`Bot invite (used for checking nsfw): https://discord.com/oauth2/authorize?client_id=${client.user.id}&scope=bot&permissions=8`);
     console.log(`Slashcommand invite (recommended): https://discord.com/oauth2/authorize?client_id=${client.user.id}&scope=applications.commands`)
     client.user.setPresence({ activity: { type: `COMPETING`, name: `bed` }, status: `online` }); //status
 });
