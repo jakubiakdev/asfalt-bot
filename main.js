@@ -19,13 +19,13 @@ client.ws.on('INTERACTION_CREATE', async (interaction) => {
 
 	webhookClient = new Discord.WebhookClient(client.user.id, interaction.token);
 
-	if (type != 0 && !client.channels.cache.get(interaction.channel_id).nsfw) {
+	if (type != "safe" && !client.channels.cache.get(interaction.channel_id).nsfw) {
 		webhookClient.send('discord would ban me lol | use on nsfw plz');
 		return;
 	}
 
 	const response = await fetch(
-		`https://astolfo.rocks/api/v1/images/random/${['safe', 'questionable', 'explicit'][type]}`
+		`https://astolfo.rocks/api/v1/images/random/${type}`
 	);
 	const json = await response.json();
 
