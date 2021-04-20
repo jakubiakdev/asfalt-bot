@@ -19,7 +19,7 @@ client.ws.on('INTERACTION_CREATE', async (interaction) => {
 
 	webhookClient = new Discord.WebhookClient(client.user.id, interaction.token);
 
-	if (type != "safe" && client.channels.cache.get(interaction.channel_id) == undefined || !client.channels.cache.get(interaction.channel_id).nsfw ) { // this is a 900000iq workaround for "cannot read propriety of undefined"
+	if (type != "safe" && client.channels.cache.get(interaction.channel_id) == undefined || type != "safe" && !client.channels.cache.get(interaction.channel_id).nsfw ) { // this is a 900000iq workaround for "cannot read propriety of undefined"
 		webhookClient.send('use on nsfw plz');
 		return;
 	}
