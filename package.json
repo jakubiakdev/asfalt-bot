@@ -7,7 +7,7 @@
     "asynckit": "^0.4.0",
     "abort-controller": "^3.0.0",
     "combined-stream": "^1.0.8",
-    "event-target-shim": "^5.0.1",
+    "event-target-shim": "^6.0.2",
     "delayed-stream": "^1.0.0",
     "mime-types": "^2.1.29",
     "mime-db": "^1.46.0",
