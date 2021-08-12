@@ -15,7 +15,7 @@
     "prism-media": "^1.2.9",
     "node-fetch": "^2.6.1",
     "setimmediate": "^1.0.5",
-    "ws": "^7.4.4",
+    "ws": "^8.1.0",
     "tweetnacl": "^1.0.3"
   },
   "devDependencies": {},
