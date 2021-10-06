@@ -11,7 +11,7 @@
     "delayed-stream": "^1.0.0",
     "mime-types": "^2.1.29",
     "mime-db": "^1.46.0",
-    "discord.js": "^12.5.1",
+    "discord.js": "^13.2.0",
     "prism-media": "^1.2.9",
     "node-fetch": "^2.6.1",
     "setimmediate": "^1.0.5",
